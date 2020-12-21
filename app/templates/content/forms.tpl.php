@@ -5,4 +5,3 @@
     <p><?php print $data['message']; ?></p>
 
 <?php endif; ?>
-

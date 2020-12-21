@@ -10,9 +10,37 @@ class RegisterForm extends Form
     {
         parent::__construct([
             'fields' => [
+                'user_name' => [
+                    'label' => 'Name',
+                    'type' => 'text',
+                    'validators' => [
+                        'validate_field_not_empty',
+                        'validate_name_symbols',
+                        'validate_length'
+                    ],
+                    'extra' => [
+                        'attr' => [
+                            'placeholder' => 'Enter your full name',
+                        ]
+                    ]
+                ],
+                'user_surname' => [
+                    'label' => 'Surname',
+                    'type' => 'text',
+                    'validators' => [
+                        'validate_field_not_empty',
+                        'validate_name_symbols',
+                        'validate_length'
+                    ],
+                    'extra' => [
+                        'attr' => [
+                            'placeholder' => 'Enter your full surname',
+                        ]
+                    ]
+                ],
                 'email' => [
                     'label' => 'Email',
-                    'type' => 'text',
+                    'type' => 'email',
                     'validators' => [
                         'validate_field_not_empty',
                         'validate_email',
@@ -21,18 +49,6 @@ class RegisterForm extends Form
                     'extra' => [
                         'attr' => [
                             'placeholder' => 'Enter email',
-                        ]
-                    ]
-                ],
-                'user_name' => [
-                    'label' => 'Name',
-                    'type' => 'text',
-                    'validators' => [
-                        'validate_field_not_empty',
-                    ],
-                    'extra' => [
-                        'attr' => [
-                            'placeholder' => 'Enter your full name',
                         ]
                     ]
                 ],
@@ -57,6 +73,30 @@ class RegisterForm extends Form
                     'extra' => [
                         'attr' => [
                             'placeholder' => 'Repeat password',
+                        ]
+                    ]
+                ],
+                'phone' => [
+                    'label' => 'Phone number',
+                    'type' => 'phone',
+                    'validators' => [
+                        'validate_phone_not_required'
+                    ],
+                    'extra' => [
+                        'attr' => [
+                            'placeholder' => 'Enter phone number',
+                        ]
+                    ]
+                ],
+                'address' => [
+                    'label' => 'Address',
+                    'type' => 'text',
+                    'validators' => [
+                        'validate_address_not_required'
+                    ],
+                    'extra' => [
+                        'attr' => [
+                            'placeholder' => 'Enter address',
                         ]
                     ]
                 ],

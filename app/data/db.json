@@ -1,0 +1,1 @@
+{"users":[{"email":"test@test.lt","password":"test","user_name":"testas","role":"user"},{"email":"pica@skani.lt","password":"pica","user_name":"Picis","role":"admin"},{"user_name":"Liudas","user_surname":"Bagdonas","email":"liudasbagd@gmail.com","password":"qq","phone":"862940195","address":"Didlaukio g. 11 - 6","role":"user"}],"pizzas":[],"orders":[]}

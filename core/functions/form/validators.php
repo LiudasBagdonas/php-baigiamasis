@@ -1,9 +1,5 @@
 <?php
 
-// //////////////////////////////
-// [1] FORM VALIDATORS
-// //////////////////////////////
-
 /**
  * Check if field values are the same
  *
@@ -27,10 +23,6 @@ function validate_fields_match($form_values, array &$form, array $params): bool
     return true;
 }
 
-// //////////////////////////////
-// [2] FIELD VALIDATORS
-// //////////////////////////////
-
 /**
  * Check if field is not empty
  *
@@ -49,44 +41,6 @@ function validate_field_not_empty(string $field_value, array &$field): bool
     return true;
 }
 
-/**
- * Chef if field contains space
- *
- * @param string $field_value
- * @param array $field
- * @return bool
- */
-function validate_field_contains_space(string $field_value, array &$field): bool
-{
-    if (str_word_count(trim($field_value)) < 2) {
-        $field['error'] = 'Field must contain space';
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * Chef if number is within the min and max range.
- *
- * @param string $field_value
- * @param array $field
- * @param array $params
- * @return bool
- */
-function validate_field_range(string $field_value, array &$field, array $params): bool
-{
-    if ($field_value < $params['min'] || $field_value > $params['max']) {
-        $field['error'] = strtr('Insert a number between @min - @max!', [
-            '@min' => $params['min'],
-            '@max' => $params['max']
-        ]);
-
-        return false;
-    }
-
-    return true;
-}
 
 /**
  * Check if input is numeric
@@ -159,4 +113,77 @@ function validate_url(string $field_value, array &$field): bool
     };
 
     return true;
+}
+
+/**
+ * Function checks if input includes only letters
+ * @param string $field_value
+ * @param array $field
+ * @return bool
+ */
+function validate_name_symbols(string $field_value, array &$field): bool
+{
+    $rexSafety = "/[-!$%^&*()_+|~=`{}\[\]:\";'<>?,.\/]/
+";
+
+    if (preg_match($rexSafety, $field_value) || strpbrk($field_value, '1234567890')) {
+        $field['error'] = 'Incorrect name';
+
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/**
+ * Function check if input includes max 40 symbols
+ * @param string $field_value
+ * @param array $field
+ * @return bool
+ */
+function validate_length(string $field_value, array &$field): bool
+{
+    if (strlen($field_value) <= 40) {
+        return true;
+    } else {
+        $field['error'] = 'Input too long. (Max 40 characters)';
+
+        return false;
+    }
+}
+
+/**
+ * Function check if unnecesary input is filled and so, if it is filled properly
+ * @param string $field_value
+ * @param array $field
+ * @return bool
+ */
+function validate_phone_not_required(string $field_value, array &$field): bool
+{
+    if ($field_value != '') {
+        if (is_numeric($field_value) && strlen($field_value) <= 9) {
+return true;
+        } else {
+            $field['error'] = 'Phone incorrect E.g. (860000000)';
+
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
+function validate_address_not_required(string $field_value, array &$field): bool
+{
+    if ($field_value != '') {
+        if (strlen($field_value) <= 200) {
+            return true;
+        } else {
+            $field['error'] = 'Maximum amount of symbols is 200';
+
+            return false;
+        }
+    } else {
+        return true;
+    }
 }

@@ -16,6 +16,7 @@ public function __construct()
                 'validators' => [
                     'validate_field_not_empty',
                     'validate_email',
+                    'validate_email_exists'
                 ],
                 'extra' => [
                     'attr' => [
@@ -27,7 +28,7 @@ public function __construct()
                 'label' => 'Password',
                 'type' => 'password',
                 'validators' => [
-                    'validate_field_not_empty',
+                    'validate_field_not_empty'
                 ],
                 'extra' => [
                     'attr' => [

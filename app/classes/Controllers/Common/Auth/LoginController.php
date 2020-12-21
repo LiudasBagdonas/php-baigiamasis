@@ -6,6 +6,7 @@ use App\App;
 use App\Controllers\Base\GuestController;
 use App\Views\BasePage;
 use App\Views\Forms\Common\Auth\LoginForm;
+use Core\View;
 
 class LoginController extends GuestController
 {
@@ -17,7 +18,7 @@ class LoginController extends GuestController
         parent::__construct();
         $this->form = new LoginForm();
         $this->page = new BasePage([
-            'title' => 'LOGIN'
+            'title' => 'Login'
         ]);
     }
 
@@ -25,7 +26,6 @@ class LoginController extends GuestController
     public function login()
     {
         if (isset($_POST['login'])) {
-            var_dump('fd');
             return [App::$router::getUrl('login') => 'Login'];
         }
 
@@ -38,7 +38,12 @@ class LoginController extends GuestController
             }
         }
 
-        $this->page->setContent($this->form->render());
+        $content = (new View([
+            'title' => 'Login',
+            'form' => $this->form->render(),
+        ]))->render(ROOT . '/app/templates/content/forms.tpl.php');
+
+        $this->page->setContent($content);
         return $this->page->render();
 
     }

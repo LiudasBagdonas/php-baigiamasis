@@ -12,10 +12,12 @@ use App\Views\Forms\Admin\OrderCreateForm;
 use Core\View;
 use App\Views\Content\HomeContent;
 use Core\Views\Link;
+use App\Views\Footer;
 
 class HomeController
 {
     protected $page;
+    protected $footer;
 
     /**
      * Controller constructor.
@@ -32,9 +34,10 @@ class HomeController
     public function __construct()
     {
         $this->page = new BasePage([
-            'title' => 'Pizzas',
+            'title' => 'Welcome',
             'js' => ['/media/js/home.js']
         ]);
+        $this->footer = new Footer();
     }
 
     /**
@@ -45,38 +48,9 @@ class HomeController
      */
     public function index(): ?string
     {
-        $user = App::$session->getUser();
-
-        if ($user) {
-            if ($user['role'] == 'admin') {
-                $forms = [
-                    'create' => (new PizzaCreateForm())->render(),
-                    'update' => (new PizzaUpdateForm())->render()
-                ];
-            }
-
-            $heading = "Zdarova, {$user['user_name']}";
-            $links = [
-                'login' => (new Link([
-                    'url' => App::$router::getUrl('logout'),
-                    'text' => 'Logout'
-                ]))->render()
-            ];
-        } else {
-            $heading = 'Jus neprisijunges';
-            $links = [
-                'login' => (new Link([
-                    'url' => App::$router::getUrl('login'),
-                    'text' => 'Login'
-                ]))->render()
-            ];
-        }
 
         $content = (new View([
-            'title' => 'Welcome to our pizzaria',
-            'heading' => $heading,
-            'forms' => $forms ?? [],
-            'links' => $links ?? []
+
         ]))->render(ROOT . '/app/templates/content/index.tpl.php');
 
         $this->page->setContent($content);
