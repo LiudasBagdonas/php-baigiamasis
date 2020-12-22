@@ -17,7 +17,6 @@ use App\Views\Footer;
 class HomeController
 {
     protected $page;
-    protected $footer;
 
     /**
      * Controller constructor.
@@ -37,7 +36,6 @@ class HomeController
             'title' => 'Welcome',
             'js' => ['/media/js/home.js']
         ]);
-        $this->footer = new Footer();
     }
 
     /**
@@ -52,7 +50,6 @@ class HomeController
         $content = (new View([
 
         ]))->render(ROOT . '/app/templates/content/index.tpl.php');
-
         $this->page->setContent($content);
 
         return $this->page->render();

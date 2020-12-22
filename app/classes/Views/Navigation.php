@@ -19,6 +19,7 @@ class Navigation extends View
 
         if (App::$session->getUser()) {
             return $nav + [
+                    App::$router::getUrl('about') => 'About',
                     App::$router::getUrl('logout') => 'Logout',
                 ];
         } else {

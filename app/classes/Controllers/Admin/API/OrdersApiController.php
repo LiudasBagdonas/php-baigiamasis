@@ -6,7 +6,7 @@ namespace App\Controllers\Admin\API;
 
 use App\App;
 use App\Controllers\Base\API\AdminController;
-use App\Views\Forms\Admin\Order\OrderUpdateForm;
+use App\Views\Forms\Admin\Order\CommentForm;
 use Core\Api\Response;
 
 class OrdersApiController extends AdminController
@@ -144,7 +144,7 @@ class OrdersApiController extends AdminController
             $response->appendError('ApiController could not update, since ID is not provided! Check JS!');
         } else {
 
-            $form = new OrderUpdateForm();
+            $form = new CommentForm();
             $order = App::$db->getRowById('orders', $id);
 
             if ($form->validate()) {

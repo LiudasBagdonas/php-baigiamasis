@@ -1,9 +1,8 @@
 'use strict';
 
 const endpoints = {
-    get: '/api/order/admin/get',
-    edit: '/api/order/admin/edit',
-    update: '/api/order/admin/update'
+    get: '/api/comment/get',
+    update: '/api/comment/post'
 };
 /**
  * This defines how JS code selects elements by ID
@@ -11,9 +10,9 @@ const endpoints = {
 const selectors = {
     table: 'table',
     forms: {
-        update: 'order-update-form'
+        comment: 'comment-form'
     },
-    modal: 'update-modal'
+    // modal: 'update-modal'
 }
 
 /**
@@ -55,70 +54,105 @@ const forms = {
         /**
          * Update Form
          */
-        update: {
+        comment: {
             init: function () {
-                if (this.elements.form()) {
-                    this.elements.form().addEventListener('submit', this.onSubmitListener);
-
-                    const closeBtn = forms.update.elements.modal().querySelector('.close');
-                    closeBtn.addEventListener('click', forms.update.onCloseListener);
+                if (this.getElement()) {
+                    this.getElement().addEventListener('submit', this.onSubmitListener);
                     return true;
                 }
 
                 return false;
-            }
-            ,
-            elements: {
-                form: function () {
-                    return document.getElementById(selectors.forms.update);
-                }
-                ,
-                modal: function () {
-                    let modal = document.getElementById(selectors.modal);
-
-                    if (!modal) {
-                        throw Error('Update modal was not found, check selector: ' + selectors.modal);
-                    }
-
-                    return modal;
-                }
+            },
+            getElement: function () {
+                return document.getElementById(selectors.forms.comment);
             }
             ,
             onSubmitListener: function (e) {
                 e.preventDefault();
                 let formData = new FormData(e.target);
-                let id = forms.update.elements.form().getAttribute('data-id');
-                formData.append('id', id);
-                formData.append('action', 'update');
-
-                api(endpoints.update, formData, forms.update.success, forms.update.fail);
+                formData.append('action', 'comment');
+                api(endpoints.update, formData, forms.comment.success, forms.comment.fail);
             }
             ,
             success: function (data) {
-                table.row.update(data);
-                forms.update.hide();
+                console.log(data)
+                table.row.append(data);
+
+                // const element = forms.comment.getElement();
+                //
+                // table.item.append(data);
+                // forms.ui.errors.hide(element);
+                // forms.ui.clear(element);
+                // forms.ui.flash.class(element, 'success');
             }
             ,
             fail: function (errors) {
-                forms.ui.errors.show(forms.update.elements.form(), errors);
-            }
-            ,
-            fill: function (data) {
-                forms.ui.fill(forms.update.elements.form(), data);
-            }
-            ,
-            onCloseListener: function (e) {
-                forms.update.hide();
-            }
-            ,
-            show: function () {
-                this.elements.modal().style.display = 'block';
-            }
-            ,
-            hide: function () {
-                this.elements.modal().style.display = 'none';
+                forms.ui.errors.show(forms.comment.getElement(), errors);
             }
         }
+        // comment_old: {
+        //     init: function () {
+        //         if (this.elements.form()) {
+        //             this.elements.form().addEventListener('submit', this.onSubmitListener);
+        //
+        //             // const closeBtn = forms.update.elements.modal().querySelector('.close');
+        //             // closeBtn.addEventListener('click', forms.update.onCloseListener);
+        //             return true;
+        //         }
+        //
+        //         return false;
+        //     }
+        //     ,
+        //     elements: {
+        //         form: function () {
+        //             return document.getElementById(selectors.forms.comment);
+        //         }
+        //         ,
+        //         modal: function () {
+        //             let modal = document.getElementById(selectors.modal);
+        //
+        //             if (!modal) {
+        //                 throw Error('Update modal was not found, check selector: ' + selectors.modal);
+        //             }
+        //
+        //             return modal;
+        //         }
+        //     }
+        //     ,
+        //     onSubmitListener: function (e) {
+        //         e.preventDefault();
+        //         let formData = new FormData(e.target);
+        //         // let id = forms.comment.elements.form().getAttribute('data-id');
+        //         // formData.append('id', id);
+        //         formData.append('action', 'comment');
+        //         api(endpoints.update, formData, forms.comment.success, forms.comment.fail);
+        //     }
+        //     ,
+        //     success: function (data) {
+        //         console.log(data)
+        //         table.row.append(data);
+        //     }
+        //     ,
+        //     fail: function (errors) {
+        //         forms.ui.errors.show(forms.comment.elements.form(), errors);
+        //     }
+        //     // ,
+        //     // fill: function (data) {
+        //     //     forms.ui.fill(forms.comment.elements.form(), data);
+        //     // }
+        //     // ,
+        //     // onCloseListener: function (e) {
+        //     //     forms.comment.hide();
+        //     // }
+        //     // ,
+        //     // show: function () {
+        //     //     this.elements.modal().style.display = 'block';
+        //     // }
+        //     // ,
+        //     // hide: function () {
+        //     //     this.elements.modal().style.display = 'none';
+        //     // }
+        // }
         ,
         /**
          * Common/Universal Form UI Functions
@@ -183,9 +217,9 @@ const forms = {
                  * @param {Object} errors
                  */
                 show: function (form, errors) {
-                    this.hide(form);
-
-                    console.log('Form errors received', errors);
+                    // this.hide(form);
+                    //
+                    // console.log('Form errors received', errors);
 
                     Object.keys(errors).forEach(function (error_id) {
                         const field = form.querySelector('input[name="' + error_id + '"]');
@@ -226,7 +260,6 @@ const table = {
     init: function () {
         if (this.getElement()) {
             this.data.load();
-
             Object.keys(this.buttons).forEach(buttonId => {
                 let success = table.buttons[buttonId].init();
                 console.log('Setting up button listeners "' + buttonId + '": ' + (success ? 'PASS' : 'FAIL'));
@@ -277,27 +310,28 @@ const table = {
 
             row.setAttribute('data-id', data.id);
             row.className = 'data-row';
-
             Object.keys(data).forEach(data_id => {
-                switch (data_id) {
+                if (data_id !== 'id') {
+                    switch (data_id) {
 
-                    case 'buttons':
-                        let buttons = data[data_id];
-                        Object.keys(buttons).forEach(button_id => {
+                        // case 'buttons':
+                        //     let buttons = data[data_id];
+                        //     Object.keys(buttons).forEach(button_id => {
+                        //         let td = document.createElement('td');
+                        //         let btn = document.createElement('button');
+                        //         btn.innerHTML = buttons[button_id];
+                        //         btn.className = button_id;
+                        //         td.append(btn);
+                        //         row.append(td);
+                        //     });
+                        //     break;
+
+                        default:
                             let td = document.createElement('td');
-                            let btn = document.createElement('button');
-                            btn.innerHTML = buttons[button_id];
-                            btn.className = button_id;
-                            td.append(btn);
+                            td.innerHTML = data[data_id];
+                            td.className = data_id;
                             row.append(td);
-                        });
-                        break;
-
-                    default:
-                        let td = document.createElement('td');
-                        td.innerHTML = data[data_id];
-                        td.className = data_id;
-                        row.append(td);
+                    }
                 }
             });
 
@@ -328,7 +362,7 @@ const table = {
     // Buttons are declared on whole table, not on each row individually, so
     // onClickListeners dont duplicate
     buttons: {
-        edit: {
+        comment: {
             init: function () {
                 if (table.getElement()) {
                     table.getElement().addEventListener('click', this.onClickListener);
@@ -338,19 +372,22 @@ const table = {
                 return false;
             },
             onClickListener: function (e) {
-                if (e.target.className === 'edit') {
+                if (e.target.className === 'comment') {
                     let formData = new FormData();
 
                     let row = e.target.closest('.data-row');
                     console.log('Edit button clicked on', row);
 
                     formData.append('id', row.getAttribute('data-id'));
-                    api(endpoints.edit, formData, table.buttons.edit.success, table.buttons.edit.fail);
+                    api(endpoints.update, formData, table.buttons.comment.success, table.buttons.comment.fail);
                 }
             },
             success: function (api_data) {
-                forms.update.show();
-                forms.update.fill(api_data);
+                // forms.update.show();
+                // forms.update.fill(api_data);
+                console.log(api_data);
+                app.row.build(api_data);
+
             },
             fail: function (errors) {
                 alert(errors[0]);

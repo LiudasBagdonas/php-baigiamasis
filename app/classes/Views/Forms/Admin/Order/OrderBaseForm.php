@@ -8,21 +8,17 @@ use Core\Views\Form;
 
 class OrderBaseForm extends Form
 {
-    public function __construct($value = null)
+    public function __construct()
     {
         parent::__construct([
             'fields' => [
-                'status' => [
-                    'type' => 'select',
-                    'options' => [
-                        'active' => 'Active',
-                        'completed' => 'Completed',
-                        'cancelled' => 'Cancelled'
-                    ],
+                'comment' => [
+                    'label' => 'Enter your comment',
+                    'type' => 'textarea',
                     'validators' => [
-                        'validate_select',
+                        'validate_field_not_empty',
                     ],
-                    'value' => $value,
+                    'value' => '',
                 ]
             ]
         ]);

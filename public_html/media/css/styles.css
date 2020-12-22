@@ -46,7 +46,7 @@ header a {
 }
 
 header a:hover {
-    color: orange;
+    color: lightblue;
 }
 
 /*######################
@@ -132,6 +132,7 @@ footer {
 .header {
     text-align: center;
     color: grey;
+    margin:  25px 0;
 }
 form label p {
     display: none;
@@ -139,7 +140,7 @@ form label p {
 
 form {
     width: 300px;
-    margin: 100px auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,13 +171,23 @@ form input {
 .error {
     color: indianred;
 }
+/*######################
+##  table
+########################*/
+
+table {
+    margin: 0 auto;
+}
+
 @media only screen and (min-width: 400px) {
     .hero-img {
         height: 200px;
     }
-
-    .header a {
-        font-size: 15px;
+.header {
+    margin: 50px 0;
+}
+    header a {
+        font-size: 20px;
     }
 
     .services-box {

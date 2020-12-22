@@ -7,16 +7,14 @@ use App\Views\Table;
 
 class OrderTable extends Table
 {
-    public function __construct($forms)
+    public function __construct()
     {
         parent::__construct([
             'headers' => [
-                'ID',
-                'Status',
-                'Pizza name',
-                'Time Ago'
-            ],
-            'forms' => $forms ?? []
+                'Name',
+                'Comment',
+                'Date'
+            ]
         ]);
     }
 
