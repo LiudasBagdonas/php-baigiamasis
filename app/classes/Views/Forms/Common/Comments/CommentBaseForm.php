@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Views\Forms\Admin\Order;
+namespace App\Views\Forms\Common\Comments;
 
 
 use Core\Views\Form;
 
-class OrderBaseForm extends Form
+class CommentBaseForm extends Form
 {
     public function __construct()
     {

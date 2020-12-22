@@ -78,14 +78,3 @@ function validate_email_exists(string $field_input, array &$field):bool
         return false;
     }
 }
-
-//function validate_not_logged_in(string $field_input, array &$form): bool
-//{
-//    if(App::$session->getUser()) {
-//        return true;
-//    } else {
-//        $form['error'] = 'You are not logged in.';
-//
-//        return false;
-//    }
-//}

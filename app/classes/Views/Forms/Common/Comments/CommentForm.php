@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Views\Forms\Admin\Order;
+namespace App\Views\Forms\Common\Comments;
 
 
-class CommentForm extends OrderBaseForm
+class CommentForm extends CommentBaseForm
 {
     public function __construct() {
         parent::__construct();
@@ -14,8 +14,5 @@ class CommentForm extends OrderBaseForm
         $this->data['buttons']['comment'] = [
             'title' => 'Comment',
         ];
-//        $this->data['validators'] = [
-//            'validate_not_logged_in'
-//        ];
     }
 }
