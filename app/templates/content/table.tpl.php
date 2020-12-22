@@ -1,12 +1,14 @@
 <h1 class="header header--main"><?php print $data['title']; ?></h1>
 
-<table class="table">
-    <tr>
-        <?php foreach ($data['headers'] as $header): ?>
-            <th><?php print $header; ?></th>
-        <?php endforeach; ?>
-    </tr>
-</table>
+<section class="table-box">
+    <table class="table">
+        <tr>
+            <?php foreach ($data['headers'] as $header): ?>
+                <th><?php print $header; ?></th>
+            <?php endforeach; ?>
+        </tr>
+    </table>
+</section>
 
 <?php if (isset($data['form']['comment'])): ?>
     <?php print $data['form']['comment']; ?>
