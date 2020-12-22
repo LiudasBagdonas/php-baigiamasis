@@ -10,8 +10,12 @@ class CommentForm extends OrderBaseForm
         parent::__construct();
 
         $this->data['attr']['id'] = 'comment-form';
+        $this->data['attr']['method'] = 'POST';
         $this->data['buttons']['comment'] = [
             'title' => 'Comment',
         ];
+//        $this->data['validators'] = [
+//            'validate_not_logged_in'
+//        ];
     }
 }

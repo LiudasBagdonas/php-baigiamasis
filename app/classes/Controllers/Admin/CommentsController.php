@@ -34,6 +34,7 @@ class CommentsController
 
     public function index()
     {
+        $user = App::$session->getUser();
         $form = [
             'comment' => (new CommentForm())->render()
         ];
@@ -46,7 +47,9 @@ class CommentsController
                 'Comment',
                 'Date'
             ],
-            'form' => $form
+            'form' => $form,
+            'user' => $user,
+            'title' => 'Comments'
         ]))->render(ROOT . '/app/templates/content/table.tpl.php');
 
         $this->page->setContent($content);
@@ -70,11 +73,15 @@ class CommentsController
             ];
 
             App::$db->insertRow('comments', $post);
-            $comment = App::$db->getRowWhere('comments');
-
+//            $comment = App::$db->getRowWhere('comments', $post);
+            $data = [];
+                $data['user'] = $post['user'];
+                $data['comment'] = $post['comment'];
+                $data['timestamp'] = date('Y:m:d H:i:s', $post['timestamp']);
+                $data['id'] = $post['id'];
 
             // Setting "what" to json-encode
-            $response->setData($comment);
+            $response->setData($data);
         } else {
             $response->setErrors($form->getErrors());
         }
@@ -86,7 +93,15 @@ class CommentsController
         $response = new Response();
         $comments = App::$db->getRowsWhere('comments');
 
-        $response->setData($comments);
+        $data = [];
+        foreach ($comments as $comment_index => $comment) {
+            $data[$comment_index]['user'] = $comment['user'];
+            $data[$comment_index]['comment'] = $comment['comment'];
+            $data[$comment_index]['timestamp'] = date('Y:m:d H:i:s', $comment['timestamp']);
+            $data[$comment_index]['id'] = $comment['id'];
+        }
+
+        $response->setData($data);
         return $response->toJson();
     }
 }

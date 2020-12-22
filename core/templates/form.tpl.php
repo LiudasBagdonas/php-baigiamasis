@@ -2,7 +2,7 @@
     <?php foreach ($data['fields'] as $field_id => $field): ?>
         <?php if (isset($field['label'])): ?>
             <label>
-            <p><?php print $field['label']; ?></p>
+            <p class="label-text"><?php print $field['label']; ?></p>
 
         <?php endif; ?>
         <?php if ($field['type'] === 'select'): ?>
@@ -14,7 +14,7 @@
                 <?php endforeach; ?>
             </select>
         <?php elseif ($field['type'] === 'textarea'): ?>
-            <textarea <?php print textarea_attr($field_id, $field); ?>><?php print $field['value'] ?? ''; ?></textarea>
+            <textarea <?php print textarea_attr($field_id, $field); ?>></textarea>
         <?php else: ?>
             <input <?php print input_attr($field_id, $field); ?>>
         <?php endif; ?>

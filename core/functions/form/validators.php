@@ -60,25 +60,6 @@ function validate_numeric(string $field_value, array &$field): bool
     return true;
 }
 
-
-/**
- * Check if selected value is one of the possible options in options array
- *
- * @param string $field_input
- * @param array $field
- * @return bool
- */
-function validate_select(string $field_input, array &$field): bool
-{
-    if (!isset($field['options'][$field_input])) {
-        $field['error'] = 'Input doesn\'t exist';
-
-        return false;
-    }
-
-    return true;
-}
-
 /**
  * Check if provided email is in correct format
  *
@@ -93,24 +74,6 @@ function validate_email(string $field_value, array &$field): bool
 
         return false;
     }
-
-    return true;
-}
-
-/**
- * Check if input is valid URL
- *
- * @param string $field_value
- * @param array $field
- * @return bool
- */
-function validate_url(string $field_value, array &$field): bool
-{
-    if (!filter_var($field_value, FILTER_VALIDATE_URL)) {
-        $field['error'] = 'Input is not a valid URL';
-
-        return false;
-    };
 
     return true;
 }
@@ -153,7 +116,7 @@ function validate_length(string $field_value, array &$field): bool
 }
 
 /**
- * Function check if unnecesary input is filled and so, if it is filled properly
+ * Function check if unnecessary input is filled and if so, if it is filled properly
  * @param string $field_value
  * @param array $field
  * @return bool
@@ -173,6 +136,12 @@ return true;
     }
 }
 
+/**
+ * Function check if unnecessary input is filled and if so, if it is filled properly
+ * @param string $field_value
+ * @param array $field
+ * @return bool
+ */
 function validate_address_not_required(string $field_value, array &$field): bool
 {
     if ($field_value != '') {
@@ -187,3 +156,16 @@ function validate_address_not_required(string $field_value, array &$field): bool
         return true;
     }
 }
+
+function validate_length_500(string $field_value, array &$field): bool
+{
+    if (strlen($field_value) <= 500) {
+        return true;
+    } else {
+        $field['error'] = 'Input too long. (Max 40 characters)';
+
+        return false;
+    }
+}
+
+

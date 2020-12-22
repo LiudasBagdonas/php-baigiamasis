@@ -1,4 +1,4 @@
-<!--<h1 class="header header--main">--><?php //print $data['title']; ?><!--</h1>-->
+<h1 class="header header--main"><?php print $data['title']; ?></h1>
 
 <table class="table">
     <tr>
@@ -7,12 +7,16 @@
         <?php endforeach; ?>
     </tr>
 </table>
-<!-- Update Modal (Popup)-->
-<?php if (isset($data['form']['comment'])): ?>
-    <div id="update-modal" class="modal">
-        <div class="wrapper">
-<!--            <span class="close">&times;</span>-->
-            <?php print $data['form']['comment']; ?>
-        </div>
-    </div>
+<?php if (isset($data['user'])): ?>
+    <!-- Update Modal (Popup)-->
+    <?php if (isset($data['form']['comment'])): ?>
+<!--        <div class="comment-form-box">-->
+                <?php print $data['form']['comment']; ?>
+<!--        </div>-->
+    <?php endif; ?>
+<?php else: ?>
+  <div class="register-redirect-box">
+      <span><?php print 'Want to leave a comment? <a href="/register">Register!</a>';?></span>
+<!--      <a href="/register">Register!</a>-->
+  </div>
 <?php endif; ?>

@@ -20,7 +20,7 @@ public function __construct()
                 ],
                 'extra' => [
                     'attr' => [
-                        'placeholder' => 'Įvesk emailą',
+                        'placeholder' => 'Enter Email',
                     ],
                 ],
             ],
@@ -32,7 +32,7 @@ public function __construct()
                 ],
                 'extra' => [
                     'attr' => [
-                        'placeholder' => 'Įvesk slaptažodį',
+                        'placeholder' => 'Enter Password',
                     ],
                 ],
             ],

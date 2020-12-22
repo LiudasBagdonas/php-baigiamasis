@@ -78,82 +78,18 @@ const forms = {
                 console.log(data)
                 table.row.append(data);
 
-                // const element = forms.comment.getElement();
+                const element = forms.comment.getElement();
                 //
                 // table.item.append(data);
-                // forms.ui.errors.hide(element);
-                // forms.ui.clear(element);
-                // forms.ui.flash.class(element, 'success');
+                forms.ui.errors.hide(element);
+                forms.ui.clear(element);
+                forms.ui.flash.class(element, 'success');
             }
             ,
             fail: function (errors) {
                 forms.ui.errors.show(forms.comment.getElement(), errors);
             }
-        }
-        // comment_old: {
-        //     init: function () {
-        //         if (this.elements.form()) {
-        //             this.elements.form().addEventListener('submit', this.onSubmitListener);
-        //
-        //             // const closeBtn = forms.update.elements.modal().querySelector('.close');
-        //             // closeBtn.addEventListener('click', forms.update.onCloseListener);
-        //             return true;
-        //         }
-        //
-        //         return false;
-        //     }
-        //     ,
-        //     elements: {
-        //         form: function () {
-        //             return document.getElementById(selectors.forms.comment);
-        //         }
-        //         ,
-        //         modal: function () {
-        //             let modal = document.getElementById(selectors.modal);
-        //
-        //             if (!modal) {
-        //                 throw Error('Update modal was not found, check selector: ' + selectors.modal);
-        //             }
-        //
-        //             return modal;
-        //         }
-        //     }
-        //     ,
-        //     onSubmitListener: function (e) {
-        //         e.preventDefault();
-        //         let formData = new FormData(e.target);
-        //         // let id = forms.comment.elements.form().getAttribute('data-id');
-        //         // formData.append('id', id);
-        //         formData.append('action', 'comment');
-        //         api(endpoints.update, formData, forms.comment.success, forms.comment.fail);
-        //     }
-        //     ,
-        //     success: function (data) {
-        //         console.log(data)
-        //         table.row.append(data);
-        //     }
-        //     ,
-        //     fail: function (errors) {
-        //         forms.ui.errors.show(forms.comment.elements.form(), errors);
-        //     }
-        //     // ,
-        //     // fill: function (data) {
-        //     //     forms.ui.fill(forms.comment.elements.form(), data);
-        //     // }
-        //     // ,
-        //     // onCloseListener: function (e) {
-        //     //     forms.comment.hide();
-        //     // }
-        //     // ,
-        //     // show: function () {
-        //     //     this.elements.modal().style.display = 'block';
-        //     // }
-        //     // ,
-        //     // hide: function () {
-        //     //     this.elements.modal().style.display = 'none';
-        //     // }
-        // }
-        ,
+        },
         /**
          * Common/Universal Form UI Functions
          */
@@ -222,10 +158,10 @@ const forms = {
                     // console.log('Form errors received', errors);
 
                     Object.keys(errors).forEach(function (error_id) {
-                        const field = form.querySelector('input[name="' + error_id + '"]');
+                        const field = form.querySelector('textarea[name="' + error_id + '"]');
                         if (field) {
-                            const span = document.createElement("span");
-                            span.className = 'field-error';
+                            const span = document.createElement("p");
+                            span.className = 'error';
                             span.innerHTML = errors[error_id];
                             field.parentNode.append(span);
 
