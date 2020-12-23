@@ -13,7 +13,7 @@ class InstallController
 
         App::$db->createTable('users');
         App::$db->createTable('comments');
-        $_SESSION = [];
+        session_destroy();
     }
 }
 
