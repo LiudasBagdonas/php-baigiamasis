@@ -43,10 +43,23 @@ function validate_login(array $filtered_input, array &$form): bool
         'email' => $filtered_input['email'],
         'password' => $filtered_input['password']
     ])) {
-        return true;
-    }
 
-    $form['fields']['password']['error'] = 'Incorrect password';
+        return true;
+    } else if (!validate_email($filtered_input['email'], $form['fields']['email']) && !empty($filtered_input['email'])) {
+        $form['fields']['email']['error'] = 'Incorrect email format';
+
+        return false;
+    } else if (!App::$db->getRowWhere('users', [
+        'email' => $filtered_input['email']]) && !empty($filtered_input['email'])) {
+        $form['fields']['email']['error'] = 'User does not exist';
+
+        return false;
+    }
+    else if (!empty($filtered_input['password'])) {
+        $form['fields']['password']['error'] = 'Incorrect password';
+
+        return false;
+    }
 
     return false;
 }

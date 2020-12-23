@@ -70,7 +70,7 @@ function validate_numeric(string $field_value, array &$field): bool
 function validate_email(string $field_value, array &$field): bool
 {
     if (!preg_match('/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/', $field_value)) {
-        $field['error'] = 'Invalid email format';
+//        $field['error'] = 'Invalid email format';
 
         return false;
     }
@@ -86,8 +86,7 @@ function validate_email(string $field_value, array &$field): bool
  */
 function validate_name_symbols(string $field_value, array &$field): bool
 {
-    $rexSafety = "/[-!$%^&*()_+|~=`{}\[\]:\";'<>?,.\/]/
-";
+    $rexSafety = "/[-!$%^&*()_+|~@=`{}\[\]:\";'<>?,.\/]/";
 
     if (preg_match($rexSafety, $field_value) || strpbrk($field_value, '1234567890')) {
         $field['error'] = 'Incorrect name';

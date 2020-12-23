@@ -150,17 +150,17 @@ const forms = {
                  * @param {Object} errors
                  */
                 show: function (form, errors) {
-                    // this.hide(form);
-                    //
+                    this.hide(form);
+
                     // console.log('Form errors received', errors);
 
                     Object.keys(errors).forEach(function (error_id) {
                         const field = form.querySelector('textarea[name="' + error_id + '"]');
                         if (field) {
-                            const span = document.createElement("p");
-                            span.className = 'error';
-                            span.innerHTML = errors[error_id];
-                            field.parentNode.append(span);
+                            const paragraph = document.createElement("p");
+                            paragraph.className = 'error';
+                            paragraph.innerHTML = errors[error_id];
+                            field.parentNode.append(paragraph);
 
                             console.log('Form error in field: ' + error_id + ':' + errors[error_id]);
                         }
@@ -172,7 +172,7 @@ const forms = {
                  * @param {type} form
                  */
                 hide: function (form) {
-                    const errors = form.querySelectorAll('.field-error');
+                    const errors = form.querySelectorAll('.error');
                     if (errors) {
                         errors.forEach(node => {
                             node.remove();
