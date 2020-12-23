@@ -51,7 +51,7 @@ function api(url, formData, success, fail) {
  */
 const forms = {
         /**
-         * Update Form
+         * Comment Form
          */
         comment: {
             init: function () {
@@ -193,11 +193,6 @@ const table = {
     init: function () {
         if (this.getElement()) {
             this.data.load();
-            Object.keys(this.buttons).forEach(buttonId => {
-                let success = table.buttons[buttonId].init();
-                console.log('Setting up button listeners "' + buttonId + '": ' + (success ? 'PASS' : 'FAIL'));
-            });
-
             return true;
         }
 
@@ -247,18 +242,6 @@ const table = {
                 if (data_id !== 'id') {
                     switch (data_id) {
 
-                        // case 'buttons':
-                        //     let buttons = data[data_id];
-                        //     Object.keys(buttons).forEach(button_id => {
-                        //         let td = document.createElement('td');
-                        //         let btn = document.createElement('button');
-                        //         btn.innerHTML = buttons[button_id];
-                        //         btn.className = button_id;
-                        //         td.append(btn);
-                        //         row.append(td);
-                        //     });
-                        //     break;
-
                         default:
                             let td = document.createElement('td');
                             td.innerHTML = data[data_id];
@@ -291,39 +274,6 @@ const table = {
             //row = this.build(data);
         },
     },
-
-    // Buttons are declared on whole table, not on each row individually, so
-    // onClickListeners dont duplicate
-    buttons: {
-        comment: {
-            init: function () {
-                if (table.getElement()) {
-                    table.getElement().addEventListener('click', this.onClickListener);
-                    return true;
-                }
-
-                return false;
-            },
-            onClickListener: function (e) {
-                if (e.target.className === 'comment') {
-                    let formData = new FormData();
-
-                    let row = e.target.closest('.data-row');
-                    console.log('Edit button clicked on', row);
-
-                    formData.append('id', row.getAttribute('data-id'));
-                    api(endpoints.update, formData, table.buttons.comment.success, table.buttons.comment.fail);
-                }
-            },
-            success: function (api_data) {
-                app.row.build(api_data);
-
-            },
-            fail: function (errors) {
-                alert(errors[0]);
-            }
-        }
-    }
 };
 
 
