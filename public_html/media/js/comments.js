@@ -1,8 +1,8 @@
 'use strict';
 
 const endpoints = {
-    get: '/api/comment/get',
-    update: '/api/comment/post'
+    add: '/api/comment/add',
+    get: '/api/comment/get_all'
 };
 /**
  * This defines how JS code selects elements by ID
@@ -70,7 +70,7 @@ const forms = {
                 e.preventDefault();
                 let formData = new FormData(e.target);
                 formData.append('action', 'comment');
-                api(endpoints.update, formData, forms.comment.success, forms.comment.fail);
+                api(endpoints.get, formData, forms.comment.success, forms.comment.fail);
             }
             ,
             success: function (data) {
@@ -208,7 +208,7 @@ const table = {
          */
         load: function () {
             console.log('Table: Calling API to get data...');
-            api(endpoints.get, null, this.success, this.fail);
+            api(endpoints.add, null, this.success, this.fail);
         },
         success: function (data) {
             Object.keys(data).forEach(i => {

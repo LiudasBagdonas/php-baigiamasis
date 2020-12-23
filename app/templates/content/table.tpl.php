@@ -14,7 +14,7 @@
     <?php print $data['form']['comment']; ?>
 
 <?php endif; ?>
-<?php if (isset($data['link'])): ?>
+<?php if (!empty($data['link'])): ?>
     <div class="register-redirect-box">
         <?php print $data['link']; ?>
     </div>

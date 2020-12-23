@@ -14,5 +14,5 @@ Router::add('index2', '/index.php', \App\Controllers\Common\HomeController::clas
 Router::add('about', '/about', \App\Controllers\Common\CommentsController::class);
 
 //API Routes
-Router::add('post_comment', '/api/comment/post', \App\Controllers\Common\CommentsController::class, 'create');
-Router::add('get_comments', '/api/comment/get', \App\Controllers\Common\CommentsController::class, 'get');
+Router::add('get_comments', '/api/comment/get_all', \App\Controllers\Common\API\CommentsApiController::class);
+Router::add('add_comment', '/api/comment/add', \App\Controllers\Common\API\CommentsApiController::class, 'addComment');
