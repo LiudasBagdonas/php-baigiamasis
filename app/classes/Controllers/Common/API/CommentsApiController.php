@@ -18,22 +18,28 @@ class CommentsApiController
     {
         $response = new Response();
 
-        $user = App::$session->getUser();
+        $user_row = App::$session->getUser();
+        $users = App::$db->getRowsWhere('users');
         $form = new CommentForm();
+        $post = [];
 
         if ($form->validate()) {
             $form_values = $form->values();
-            $post = [
-                'user' => $user['user_name'],
-                'timestamp' => time(),
-                'comment' => $form_values['comment'],
-                'id' => uniqid()
-            ];
+            foreach ($users as $user_index => $user) {
+                if ($user_row == $user) {
+                    $post = [
+                        'user_id' => $user_index,
+                        'timestamp' => time(),
+                        'comment' => $form_values['comment'],
+                        'id' => uniqid()
+                    ];
 
+                }
+            }
             App::$db->insertRow('comments', $post);
 
             $data = [];
-            $data['user'] = $post['user'];
+            $data['user_id'] = App::$db->getRowById('users', $post['user_id'])['user_name'];
             $data['comment'] = $post['comment'];
             $data['timestamp'] = date('Y:m:d H:i:s', $post['timestamp']);
             $data['id'] = $post['id'];
@@ -57,7 +63,7 @@ class CommentsApiController
 
         $data = [];
         foreach ($comments as $comment_index => $comment) {
-            $data[$comment_index]['user'] = $comment['user'];
+            $data[$comment_index]['user_id'] = App::$db->getRowById('users', $comment['user_id'])['user_name'];
             $data[$comment_index]['comment'] = $comment['comment'];
             $data[$comment_index]['timestamp'] = date('Y:m:d H:i:s', $comment['timestamp']);
             $data[$comment_index]['id'] = $comment['id'];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Api;
+namespace Core\API;
 
 class Response
 {
